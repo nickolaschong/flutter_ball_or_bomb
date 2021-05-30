@@ -1,0 +1,11 @@
+#include: package:pedantic/analysis_options.yaml
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    - sort_constructors_first
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
