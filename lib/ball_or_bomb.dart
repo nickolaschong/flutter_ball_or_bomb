@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class BallOrBomb extends StatefulWidget {
-  const BallOrBomb({Key? key}) : super(key: key);
+  const BallOrBomb({Key? key, required this.size}) : super(key: key);
+  final double size;
 
   @override
   _BallOrBombState createState() => _BallOrBombState();
@@ -29,17 +30,24 @@ class _BallOrBombState extends State<BallOrBomb> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      customBorder: const CircleBorder(),
-      splashColor: Colors.red,
-      onTap: randomBallOrBomb,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          decoration: BoxDecoration(
-            color: _color,
-            shape: BoxShape.circle,
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          splashColor: Colors.red,
+          onTap: randomBallOrBomb,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: BoxDecoration(
+                color: _color,
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
         ),
       ),
