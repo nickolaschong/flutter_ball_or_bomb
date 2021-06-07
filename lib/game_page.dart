@@ -11,28 +11,32 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  late double topPosition;
-  late double leftPosition;
+  late Size size;
   late double laneSize;
+  List<double> position = [0.0, 0.0, 0.0];
+  late double hiddenTop, hiddenBot;
 
   double generateTopPosition(double top) => Random().nextDouble() * top;
 
   @override
   void initState() {
     super.initState();
-    topPosition = generateTopPosition(0);
   }
 
-  void changePosition(double top) {
+  void changePosition() {
     setState(() {
-      topPosition = generateTopPosition(500);
+      position[0] = 1;
     });
   }
-  // TODO: Auto animate position from top to bottom
+
+  // TODO: Find alternate way to do repeat animation
 
   @override
   Widget build(BuildContext context) {
-    laneSize = MediaQuery.of(context).size.width / 3;
+    size = MediaQuery.of(context).size;
+    laneSize = size.width / 3.0;
+    hiddenTop = -laneSize - 100;
+    hiddenBot = size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,14 +58,15 @@ class _GamePageState extends State<GamePage> {
         children: [
           Container(color: color),
           AnimatedPositioned(
-            top: topPosition,
-            left: 0,
-            duration: const Duration(seconds: 1),
-            child: InkWell(
-              onTap: () => changePosition(50),
-              child: BallOrBomb(
-                size: laneSize,
-              ),
+            onEnd: () {
+              setState(() {
+                position[0] = position[0] == hiddenBot ? hiddenTop : hiddenBot;
+              });
+            },
+            top: position[0],
+            duration: const Duration(milliseconds: 1000),
+            child: BallOrBomb(
+              size: laneSize,
             ),
           ),
         ],
@@ -75,10 +80,10 @@ class _GamePageState extends State<GamePage> {
         children: [
           Container(color: color),
           AnimatedPositioned(
-            top: topPosition,
-            duration: const Duration(seconds: 1),
+            top: 0,
+            duration: const Duration(milliseconds: 700),
             child: InkWell(
-              onTap: () => changePosition(50),
+              onTap: () => changePosition(),
               child: Container(
                 height: 50,
                 alignment: Alignment.center,
