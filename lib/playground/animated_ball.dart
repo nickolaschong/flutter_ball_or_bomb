@@ -8,7 +8,7 @@ class AnimatedBall extends StatefulWidget {
 }
 
 class _AnimatedBallState extends State<AnimatedBall> {
-  double _begin = 0.0;
+  double _begin = 1.0;
   double _end = 1.0;
 
   @override

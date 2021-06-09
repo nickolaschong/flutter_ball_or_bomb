@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter:
     sdk: flutter
+  wakelock: ^0.5.2
 
 dev_dependencies:
   flutter_test:
