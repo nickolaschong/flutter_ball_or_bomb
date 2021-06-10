@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ball_or_bomb/game_lane.dart';
+import 'package:flutter_ball_or_bomb/game_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends StatelessWidget {
   @override
@@ -40,6 +42,10 @@ class GamePage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.read(gameStateProvider.notifier).start(),
+        child: const Icon(Icons.add),
       ),
     );
   }
