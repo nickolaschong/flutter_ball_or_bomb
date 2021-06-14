@@ -11,19 +11,30 @@ class BallOrBomb extends StatefulWidget {
 }
 
 class _BallOrBombState extends State<BallOrBomb> {
+  late Color _color;
+  final List<Color> colorList = [
+    Colors.pink,
+    Colors.indigo,
+    Colors.cyan,
+    Colors.amber,
+    Colors.lime
+  ];
+
   final _random = Random();
-  final int _bombChancePercentage = 30;
-  Color _color = Colors.blue;
+  final int _bombChancePercentage = 10;
 
   @override
   void initState() {
+    _color = randomColor();
     super.initState();
   }
+
+  Color randomColor() => colorList[_random.nextInt(colorList.length)];
 
   void randomBallOrBomb() {
     setState(() {
       _color = _random.nextInt(99) + 1 > _bombChancePercentage
-          ? Colors.blue
+          ? randomColor()
           : Colors.black;
     });
   }
