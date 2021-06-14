@@ -57,7 +57,7 @@ class _GameLaneState extends State<GameLane> {
                         : widget.upperBound;
                   });
                 },
-                curve: Curves.fastOutSlowIn,
+                // curve: Curves.linear,
                 top: position,
                 duration: const Duration(milliseconds: 1500),
                 child: BallOrBomb(
