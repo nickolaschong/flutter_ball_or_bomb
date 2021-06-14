@@ -29,30 +29,39 @@ class GamePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Row(
+      body: Column(
         children: [
-          Expanded(
-            child: GameLane(
-              color: Colors.grey[200],
-              size: laneWidth,
-              lowerBound: lowerBound,
-              upperBound: upperBound,
-            ),
+          const Placeholder(
+            fallbackHeight: 50,
           ),
           Expanded(
-            child: GameLane(
-              color: Colors.grey[100],
-              size: laneWidth,
-              lowerBound: lowerBound,
-              upperBound: upperBound,
-            ),
-          ),
-          Expanded(
-            child: GameLane(
-              color: Colors.grey[50],
-              size: laneWidth,
-              lowerBound: lowerBound,
-              upperBound: upperBound,
+            child: Row(
+              children: [
+                Expanded(
+                  child: GameLane(
+                    color: Colors.grey[200],
+                    size: laneWidth,
+                    lowerBound: lowerBound,
+                    upperBound: upperBound,
+                  ),
+                ),
+                Expanded(
+                  child: GameLane(
+                    color: Colors.grey[100],
+                    size: laneWidth,
+                    lowerBound: lowerBound,
+                    upperBound: upperBound,
+                  ),
+                ),
+                Expanded(
+                  child: GameLane(
+                    color: Colors.grey[50],
+                    size: laneWidth,
+                    lowerBound: lowerBound,
+                    upperBound: upperBound,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
