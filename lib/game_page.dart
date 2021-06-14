@@ -14,6 +14,20 @@ class GamePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('BALL ⚽ or BOMB 💣'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.play_arrow),
+            onPressed: () {
+              context.read(gameStateProvider.notifier).start();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.stop),
+            onPressed: () {
+              context.read(gameStateProvider.notifier).stop();
+            },
+          ),
+        ],
       ),
       body: Row(
         children: [
@@ -42,10 +56,6 @@ class GamePage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read(gameStateProvider.notifier).start(),
-        child: const Icon(Icons.add),
       ),
     );
   }

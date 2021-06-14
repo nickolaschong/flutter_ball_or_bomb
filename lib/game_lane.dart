@@ -22,41 +22,52 @@ class GameLane extends StatefulWidget {
 }
 
 class _GameLaneState extends State<GameLane> {
-  double position = 0;
+  late double position;
+
+  @override
+  void initState() {
+    position = widget.lowerBound;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, watch, child) {
-        final state = watch(gameStateProvider);
-        state.maybeMap(
-          idle: (_) => print('idle'),
-          start: (_) {
-            print('start ${DateTime.now()}');
-            position = widget.upperBound;
-          },
-          stop: (_) => print('stop'),
-          orElse: () => print('orElese'),
-        );
-        return Stack(
-          children: [
-            Container(color: widget.color),
-            AnimatedPositioned(
-              onEnd: () {
-                setState(() {
-                  position = position == widget.upperBound
-                      ? widget.lowerBound
-                      : widget.upperBound;
-                });
-              },
-              curve: Curves.fastOutSlowIn,
-              top: position,
-              duration: const Duration(milliseconds: 1500),
-              child: BallOrBomb(size: widget.size),
-            ),
-          ],
+    return ProviderListener<GameState>(
+      provider: gameStateProvider,
+      onChange: (context, state) {
+        state.maybeWhen(
+          start: () => position += 1,
+          stop: () => position = position,
+          orElse: () => position = widget.lowerBound + 1,
         );
       },
+      child: Consumer(
+        builder: (context, watch, child) {
+          final state = watch(gameStateProvider);
+
+          return Stack(
+            children: [
+              child!,
+              AnimatedPositioned(
+                onEnd: () {
+                  if (state == const GameState.stop()) return;
+                  setState(() {
+                    position = position == widget.upperBound
+                        ? widget.lowerBound
+                        : widget.upperBound;
+                  });
+                },
+                curve: Curves.fastOutSlowIn,
+                top: position,
+                duration: const Duration(milliseconds: 1500),
+                child: BallOrBomb(
+                    size: state == const GameState.stop() ? 0 : widget.size),
+              ),
+            ],
+          );
+        },
+        child: Container(color: widget.color),
+      ),
     );
   }
 }
