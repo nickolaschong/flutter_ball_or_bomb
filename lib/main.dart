@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      // home: const GamePage(),
       home: GamePage(),
     );
   }

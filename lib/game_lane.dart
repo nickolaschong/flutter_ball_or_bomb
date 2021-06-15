@@ -61,7 +61,8 @@ class _GameLaneState extends State<GameLane> {
                 top: position,
                 duration: const Duration(milliseconds: 1500),
                 child: BallOrBomb(
-                    size: state == const GameState.stop() ? 0 : widget.size),
+                  size: state == const GameState.stop() ? 0 : widget.size,
+                ),
               ),
             ],
           );

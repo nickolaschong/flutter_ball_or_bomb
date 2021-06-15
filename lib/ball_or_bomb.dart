@@ -11,8 +11,9 @@ class BallOrBomb extends StatefulWidget {
 }
 
 class _BallOrBombState extends State<BallOrBomb> {
-  late Color _color;
-  final List<Color> colorList = [
+  late Color _currentColor;
+  final Color bombColor = Colors.black;
+  final List<Color> ballColors = [
     Colors.pink,
     Colors.indigo,
     Colors.cyan,
@@ -21,41 +22,64 @@ class _BallOrBombState extends State<BallOrBomb> {
   ];
 
   final _random = Random();
-  final int _bombChancePercentage = 10;
+  final int _bombChancePercentage = 20;
 
   @override
   void initState() {
-    _color = randomColor();
+    _currentColor = randomColor();
     super.initState();
   }
 
-  Color randomColor() => colorList[_random.nextInt(colorList.length)];
+  Color randomColor() => ballColors[_random.nextInt(ballColors.length)];
 
   void randomBallOrBomb() {
     setState(() {
-      _color = _random.nextInt(99) + 1 > _bombChancePercentage
+      _currentColor = _random.nextInt(99) + 1 > _bombChancePercentage
           ? randomColor()
-          : Colors.black;
+          : bombColor;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO onclick hide the container
+    return AnimatedCircularContainer(
+      size: widget.size,
+      color: _currentColor,
+      onTap: randomBallOrBomb,
+    );
+  }
+}
+
+class AnimatedCircularContainer extends StatelessWidget {
+  const AnimatedCircularContainer({
+    Key? key,
+    required this.size,
+    required this.onTap,
+    required this.color,
+  }) : super(key: key);
+
+  final double size;
+  final VoidCallback onTap;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.size,
-      height: widget.size,
+      width: size,
+      height: size,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           customBorder: const CircleBorder(),
           splashColor: Colors.red,
-          onTap: randomBallOrBomb,
+          onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
-                color: _color,
+                color: color,
                 shape: BoxShape.circle,
               ),
             ),
