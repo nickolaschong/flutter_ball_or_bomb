@@ -8,7 +8,6 @@ class GamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double laneWidth = size.width / 3.0;
-    final double lowerBound = -laneWidth;
     final double upperBound = size.height;
 
     return Scaffold(
@@ -41,7 +40,6 @@ class GamePage extends StatelessWidget {
                   child: GameLane(
                     color: Colors.grey[200],
                     size: laneWidth,
-                    lowerBound: lowerBound,
                     upperBound: upperBound,
                   ),
                 ),
@@ -49,7 +47,6 @@ class GamePage extends StatelessWidget {
                   child: GameLane(
                     color: Colors.grey[100],
                     size: laneWidth,
-                    lowerBound: lowerBound,
                     upperBound: upperBound,
                   ),
                 ),
@@ -57,7 +54,6 @@ class GamePage extends StatelessWidget {
                   child: GameLane(
                     color: Colors.grey[50],
                     size: laneWidth,
-                    lowerBound: lowerBound,
                     upperBound: upperBound,
                   ),
                 ),
