@@ -12,38 +12,39 @@ class BallOrBomb extends StatefulWidget {
 
 class _BallOrBombState extends State<BallOrBomb> {
   late Color _currentColor;
-  final Color bombColor = Colors.black;
-  final List<Color> ballColors = [
+  final Color _bombColor = Colors.black;
+  final List<Color> _ballColors = [
     Colors.pink,
     Colors.indigo,
     Colors.cyan,
     Colors.amber,
     Colors.lime
   ];
+  late double size;
 
   final _random = Random();
-  final int _bombChancePercentage = 20;
+  final int _bombChancePercentage = 10;
 
   @override
   void initState() {
     _currentColor = randomColor();
+    size = widget.size;
     super.initState();
   }
 
-  Color randomColor() => ballColors[_random.nextInt(ballColors.length)];
+  Color randomColor() => _ballColors[_random.nextInt(_ballColors.length)];
 
   void randomBallOrBomb() {
     setState(() {
       _currentColor = _random.nextInt(99) + 1 > _bombChancePercentage
           ? randomColor()
-          : bombColor;
+          : _bombColor;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO onclick hide the container
-    return AnimatedCircularContainer(
+    return CircularContainer(
       size: widget.size,
       color: _currentColor,
       onTap: randomBallOrBomb,
@@ -51,8 +52,8 @@ class _BallOrBombState extends State<BallOrBomb> {
   }
 }
 
-class AnimatedCircularContainer extends StatelessWidget {
-  const AnimatedCircularContainer({
+class CircularContainer extends StatelessWidget {
+  const CircularContainer({
     Key? key,
     required this.size,
     required this.onTap,
@@ -72,12 +73,13 @@ class AnimatedCircularContainer extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           customBorder: const CircleBorder(),
-          splashColor: Colors.red,
+          splashFactory: InkRipple.splashFactory,
           onTap: onTap,
+          onLongPress: () {},
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+            child: Container(
+              width: 100,
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,
