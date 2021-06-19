@@ -5,6 +5,8 @@ import 'package:flutter_ball_or_bomb/ball_or_bomb.dart';
 import 'package:flutter_ball_or_bomb/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'constants.dart';
+
 class GameLane extends StatefulWidget {
   const GameLane({
     Key? key,
@@ -25,6 +27,10 @@ class _GameLaneState extends State<GameLane>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+  late Color _currentBallColor;
+  final _random = Random();
+  Color randomColor() => ballColors[_random.nextInt(ballColors.length)];
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -36,6 +42,16 @@ class _GameLaneState extends State<GameLane>
     _controller.addListener(() {
       setState(() {});
     });
+
+    _controller.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _currentBallColor = randomColor();
+        _controller.reset();
+        _controller.forward();
+      }
+    });
+
+    _currentBallColor = randomColor();
 
     super.initState();
   }
@@ -52,7 +68,7 @@ class _GameLaneState extends State<GameLane>
       provider: gameStateProvider,
       onChange: (context, state) {
         state.maybeWhen(
-          start: () => _controller.repeat(),
+          start: () => _controller.forward(),
           stop: () => _controller.reset(),
           orElse: () => _controller.reset(),
         );
@@ -70,14 +86,13 @@ class _GameLaneState extends State<GameLane>
                   onPointerDown: (e) {
                     setState(() {
                       _controller.reset();
-                      Future.delayed(
-                          Duration(milliseconds: Random().nextInt(50)), () {
-                        _controller.repeat();
-                      });
+                      _controller.forward();
                     });
                   },
                   child: BallOrBomb(
-                    size: state == const GameState.stop() ? 0 : widget.size,
+                    size: state == const GameState.start() ? widget.size : 0,
+                    color: _currentBallColor,
+                    onTap: randomBallOrBomb,
                   ),
                 ),
               ),
@@ -88,84 +103,12 @@ class _GameLaneState extends State<GameLane>
       ),
     );
   }
-}
 
-// class GameLane extends StatefulWidget {
-//   const GameLane({
-//     Key? key,
-//     required this.color,
-//     required this.size,
-//     required this.lowerBound,
-//     required this.upperBound,
-//   }) : super(key: key);
-//
-//   final Color? color;
-//   final double size;
-//   final double lowerBound;
-//   final double upperBound;
-//
-//   @override
-//   _GameLaneState createState() => _GameLaneState();
-// }
-//
-// class _GameLaneState extends State<GameLane> {
-//   late double _position;
-//   late int _speedInMs;
-//
-//   @override
-//   void initState() {
-//     _position = widget.lowerBound;
-//     _speedInMs = 1500;
-//     super.initState();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ProviderListener<GameState>(
-//       provider: gameStateProvider,
-//       onChange: (context, state) {
-//         state.maybeWhen(
-//           start: () => _position += 1,
-//           stop: () => _position = _position,
-//           orElse: () => _position = widget.lowerBound + 1,
-//         );
-//       },
-//       child: Consumer(
-//         builder: (context, watch, child) {
-//           final state = watch(gameStateProvider);
-//
-//           return Stack(
-//             children: [
-//               child!,
-//               AnimatedPositioned(
-//                 onEnd: () {
-//                   if (state == const GameState.stop()) return;
-//                   setState(() {
-//                     _position = _position == widget.upperBound
-//                         ? widget.lowerBound
-//                         : widget.upperBound;
-//                     _speedInMs = 2000;
-//                   });
-//                 },
-//                 top: _position,
-//                 duration: Duration(milliseconds: _speedInMs),
-//                 child: Listener(
-//                   onPointerDown: (e) {
-//                     setState(() {
-//                       _speedInMs = 1;
-//                       _position = widget.lowerBound;
-//                     });
-//                   },
-//                   child: BallOrBomb(
-//                     size: state == const GameState.stop() ? 0 : widget.size,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           );
-//         },
-//         child: Container(color: widget.color),
-//       ),
-//     );
-//   }
-// }
+  void randomBallOrBomb() {
+    setState(() {
+      _currentBallColor = _random.nextInt(99) + 1 > bombChancePercentage
+          ? randomColor()
+          : bombColor;
+    });
+  }
+}
