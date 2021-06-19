@@ -28,37 +28,36 @@ class GamePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          const Placeholder(
-            fallbackHeight: 50,
+          Row(
+            children: [
+              Expanded(
+                child: GameLane(
+                  color: Colors.grey[200],
+                  size: laneWidth,
+                  upperBound: upperBound,
+                ),
+              ),
+              Expanded(
+                child: GameLane(
+                  color: Colors.grey[100],
+                  size: laneWidth,
+                  upperBound: upperBound,
+                ),
+              ),
+              Expanded(
+                child: GameLane(
+                  color: Colors.grey[50],
+                  size: laneWidth,
+                  upperBound: upperBound,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: GameLane(
-                    color: Colors.grey[200],
-                    size: laneWidth,
-                    upperBound: upperBound,
-                  ),
-                ),
-                Expanded(
-                  child: GameLane(
-                    color: Colors.grey[100],
-                    size: laneWidth,
-                    upperBound: upperBound,
-                  ),
-                ),
-                Expanded(
-                  child: GameLane(
-                    color: Colors.grey[50],
-                    size: laneWidth,
-                    upperBound: upperBound,
-                  ),
-                ),
-              ],
-            ),
+          Container(
+            height: 80,
+            color: Colors.white,
           ),
         ],
       ),
