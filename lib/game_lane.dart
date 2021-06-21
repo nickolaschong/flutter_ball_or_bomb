@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ball_or_bomb/ball_or_bomb.dart';
+import 'package:flutter_ball_or_bomb/constants.dart';
 import 'package:flutter_ball_or_bomb/game_state.dart';
+import 'package:flutter_ball_or_bomb/score_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'constants.dart';
 
 class GameLane extends StatefulWidget {
   const GameLane({
@@ -69,13 +69,16 @@ class _GameLaneState extends State<GameLane>
       onChange: (context, state) {
         state.maybeWhen(
           start: () => _controller.forward(),
-          stop: () => _controller.reset(),
+          stop: () {
+            _controller.reset();
+            context.read(scoreStateProvider.notifier).reset();
+          },
           orElse: () => _controller.reset(),
         );
       },
       child: Consumer(
         builder: (context, watch, child) {
-          final state = watch(gameStateProvider);
+          final gameState = watch(gameStateProvider);
 
           return Stack(
             children: [
@@ -90,9 +93,13 @@ class _GameLaneState extends State<GameLane>
                     });
                   },
                   child: BallOrBomb(
-                    size: state == const GameState.start() ? widget.size : 0,
+                    size:
+                        gameState == const GameState.start() ? widget.size : 0,
                     color: _currentBallColor,
-                    onTap: randomBallOrBomb,
+                    onTap: () {
+                      context.read(scoreStateProvider.notifier).increment();
+                      randomBallOrBomb();
+                    },
                   ),
                 ),
               ),
