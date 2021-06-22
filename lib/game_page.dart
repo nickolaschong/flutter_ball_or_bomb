@@ -4,6 +4,8 @@ import 'package:flutter_ball_or_bomb/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends StatelessWidget {
+  const GamePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

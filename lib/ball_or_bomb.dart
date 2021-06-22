@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class BallOrBomb extends StatelessWidget {
+  final double size;
+  final VoidCallback onTap;
+  final Color color;
+
   const BallOrBomb({
     Key? key,
     required this.size,
     required this.color,
     required this.onTap,
   }) : super(key: key);
-  final double size;
-  final VoidCallback onTap;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
