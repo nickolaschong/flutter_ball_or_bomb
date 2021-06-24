@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.brown,
+        textTheme: ThemeData().textTheme.apply(
+              bodyColor: Colors.brown,
+            ),
       ),
       home: const GamePage(),
     );

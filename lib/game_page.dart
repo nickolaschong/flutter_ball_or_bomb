@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ball_or_bomb/game_lane.dart';
 import 'package:flutter_ball_or_bomb/game_state.dart';
+import 'package:flutter_ball_or_bomb/score_board.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends StatelessWidget {
@@ -57,9 +58,19 @@ class GamePage extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 80,
-            color: Colors.white,
+          Column(
+            children: [
+              Container(
+                color: Colors.white,
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Time left: 100'),
+                  ),
+                ),
+              ),
+              const ScoreBoard(),
+            ],
           ),
         ],
       ),
