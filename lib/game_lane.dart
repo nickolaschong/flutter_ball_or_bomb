@@ -26,6 +26,7 @@ class GameLane extends StatefulWidget {
 class _GameLaneState extends State<GameLane>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  late Animation<double> _animation;
 
   late Color _currentBallColor;
   final _random = Random();
@@ -36,12 +37,7 @@ class _GameLaneState extends State<GameLane>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
-      upperBound: widget.upperBound,
     );
-
-    _controller.addListener(() {
-      setState(() {});
-    });
 
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -50,6 +46,12 @@ class _GameLaneState extends State<GameLane>
         _controller.forward();
       }
     });
+
+    _animation =
+        Tween<double>(begin: 0, end: widget.upperBound).animate(_controller)
+          ..addListener(() {
+            setState(() {});
+          });
 
     _currentBallColor = randomColor();
 
@@ -77,14 +79,12 @@ class _GameLaneState extends State<GameLane>
         );
       },
       child: Consumer(
-        builder: (context, watch, child) {
-          final gameState = watch(gameStateProvider);
-
+        builder: (context, ref, child) {
+          final gameState = ref(gameStateProvider);
           return Stack(
             children: [
               child!,
-              Positioned(
-                top: _controller.value,
+              TopPositionTransition(
                 child: Listener(
                   onPointerDown: (e) {
                     setState(() {
@@ -102,7 +102,8 @@ class _GameLaneState extends State<GameLane>
                     },
                   ),
                 ),
-              ),
+                animation: _animation,
+              )
             ],
           );
         },
@@ -117,5 +118,21 @@ class _GameLaneState extends State<GameLane>
           ? randomColor()
           : bombColor;
     });
+  }
+}
+
+class TopPositionTransition extends AnimatedWidget {
+  const TopPositionTransition({
+    Key? key,
+    required Animation<double> animation,
+    required this.child,
+  }) : super(key: key, listenable: animation);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+    return Positioned(top: animation.value, child: child);
   }
 }
