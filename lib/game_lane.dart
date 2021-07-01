@@ -41,17 +41,17 @@ class _GameLaneState extends State<GameLane>
 
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
-        _currentBallColor = randomColor();
-        _controller.reset();
-        _controller.forward();
+        // Remove setState here the animation becomes janky from the start but works the same
+        setState(() {
+          _currentBallColor = randomColor();
+          _controller.reset();
+          _controller.forward();
+        });
       }
     });
 
     _animation =
-        Tween<double>(begin: 0, end: widget.upperBound).animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
+        Tween<double>(begin: 0, end: widget.upperBound).animate(_controller);
 
     _currentBallColor = randomColor();
 
