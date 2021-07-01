@@ -34,24 +34,24 @@ class _ScoreBoardState extends State<ScoreBoard> {
         });
       },
       child: Consumer(
-        builder: (context, watch, child) {
-          final scoreState = watch(scoreStateProvider);
+        builder: (context, ref, child) {
+          final scoreState = ref(scoreStateProvider);
 
           return Container(
             color: Colors.white,
             height: 60,
-            child: Center(
-              child: AnimatedDefaultTextStyle(
+            child: AnimatedDefaultTextStyle(
+              child: Center(
                 child: Text('$scoreState'),
-                style: _isAnimateScoreText ? scaleTextStyle : defaultTextStyle,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.bounceInOut,
-                onEnd: () {
-                  setState(() {
-                    _isAnimateScoreText = false;
-                  });
-                },
               ),
+              style: _isAnimateScoreText ? scaleTextStyle : defaultTextStyle,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.bounceInOut,
+              onEnd: () {
+                setState(() {
+                  _isAnimateScoreText = false;
+                });
+              },
             ),
           );
         },
