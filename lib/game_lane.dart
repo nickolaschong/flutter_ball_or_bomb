@@ -96,14 +96,7 @@ class _GameLaneState extends State<GameLane>
                     size:
                         gameState == const GameState.start() ? widget.size : 0,
                     color: _currentBallColor,
-                    onTap: () {
-                      if (_currentBallColor != bombColor) {
-                        context.read(scoreStateProvider.notifier).increment();
-                        randomBallOrBomb();
-                      } else {
-                        context.read(gameStateProvider.notifier).stop();
-                      }
-                    },
+                    onTap: _onBallOrBombTap,
                   ),
                 ),
                 animation: _animation,
@@ -116,12 +109,21 @@ class _GameLaneState extends State<GameLane>
     );
   }
 
-  void randomBallOrBomb() {
+  void _randomBallOrBomb() {
     setState(() {
       _currentBallColor = _random.nextInt(99) + 1 > bombChancePercentage
           ? randomColor()
           : bombColor;
     });
+  }
+
+  void _onBallOrBombTap() {
+    if (_currentBallColor != bombColor) {
+      context.read(scoreStateProvider.notifier).increment();
+      _randomBallOrBomb();
+    } else {
+      context.read(gameStateProvider.notifier).over();
+    }
   }
 }
 
