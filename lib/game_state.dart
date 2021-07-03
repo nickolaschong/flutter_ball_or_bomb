@@ -10,6 +10,7 @@ final gameStateProvider = StateNotifierProvider<GameStateNotifier, GameState>(
 class GameState with _$GameState {
   const factory GameState.start() = Start;
   const factory GameState.stop() = Stop;
+  const factory GameState.over() = Over;
 }
 
 class GameStateNotifier extends StateNotifier<GameState> {
@@ -21,5 +22,9 @@ class GameStateNotifier extends StateNotifier<GameState> {
 
   void stop() {
     state = const GameState.stop();
+  }
+
+  void over() {
+    state = const GameState.over();
   }
 }

@@ -23,6 +23,10 @@ class _$GameStateTearOff {
   Stop stop() {
     return const Stop();
   }
+
+  Over over() {
+    return const Over();
+  }
 }
 
 /// @nodoc
@@ -34,12 +38,14 @@ mixin _$GameState {
   TResult when<TResult extends Object?>({
     required TResult Function() start,
     required TResult Function() stop,
+    required TResult Function() over,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? start,
     TResult Function()? stop,
+    TResult Function()? over,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,12 +53,14 @@ mixin _$GameState {
   TResult map<TResult extends Object?>({
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
+    required TResult Function(Over value) over,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
+    TResult Function(Over value)? over,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -112,6 +120,7 @@ class _$Start implements Start {
   TResult when<TResult extends Object?>({
     required TResult Function() start,
     required TResult Function() stop,
+    required TResult Function() over,
   }) {
     return start();
   }
@@ -121,6 +130,7 @@ class _$Start implements Start {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? start,
     TResult Function()? stop,
+    TResult Function()? over,
     required TResult orElse(),
   }) {
     if (start != null) {
@@ -134,6 +144,7 @@ class _$Start implements Start {
   TResult map<TResult extends Object?>({
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
+    required TResult Function(Over value) over,
   }) {
     return start(this);
   }
@@ -143,6 +154,7 @@ class _$Start implements Start {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
+    TResult Function(Over value)? over,
     required TResult orElse(),
   }) {
     if (start != null) {
@@ -195,6 +207,7 @@ class _$Stop implements Stop {
   TResult when<TResult extends Object?>({
     required TResult Function() start,
     required TResult Function() stop,
+    required TResult Function() over,
   }) {
     return stop();
   }
@@ -204,6 +217,7 @@ class _$Stop implements Stop {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? start,
     TResult Function()? stop,
+    TResult Function()? over,
     required TResult orElse(),
   }) {
     if (stop != null) {
@@ -217,6 +231,7 @@ class _$Stop implements Stop {
   TResult map<TResult extends Object?>({
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
+    required TResult Function(Over value) over,
   }) {
     return stop(this);
   }
@@ -226,6 +241,7 @@ class _$Stop implements Stop {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
+    TResult Function(Over value)? over,
     required TResult orElse(),
   }) {
     if (stop != null) {
@@ -237,4 +253,91 @@ class _$Stop implements Stop {
 
 abstract class Stop implements GameState {
   const factory Stop() = _$Stop;
+}
+
+/// @nodoc
+abstract class $OverCopyWith<$Res> {
+  factory $OverCopyWith(Over value, $Res Function(Over) then) =
+      _$OverCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$OverCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
+    implements $OverCopyWith<$Res> {
+  _$OverCopyWithImpl(Over _value, $Res Function(Over) _then)
+      : super(_value, (v) => _then(v as Over));
+
+  @override
+  Over get _value => super._value as Over;
+}
+
+/// @nodoc
+
+class _$Over implements Over {
+  const _$Over();
+
+  @override
+  String toString() {
+    return 'GameState.over()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Over);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() start,
+    required TResult Function() stop,
+    required TResult Function() over,
+  }) {
+    return over();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
+    TResult Function()? stop,
+    TResult Function()? over,
+    required TResult orElse(),
+  }) {
+    if (over != null) {
+      return over();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Start value) start,
+    required TResult Function(Stop value) stop,
+    required TResult Function(Over value) over,
+  }) {
+    return over(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Start value)? start,
+    TResult Function(Stop value)? stop,
+    TResult Function(Over value)? over,
+    required TResult orElse(),
+  }) {
+    if (over != null) {
+      return over(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Over implements GameState {
+  const factory Over() = _$Over;
 }
