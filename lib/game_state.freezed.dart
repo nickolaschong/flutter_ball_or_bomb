@@ -16,10 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$GameStateTearOff {
   const _$GameStateTearOff();
 
-  Idle idle() {
-    return const Idle();
-  }
-
   Start start() {
     return const Start();
   }
@@ -36,14 +32,12 @@ const $GameState = _$GameStateTearOff();
 mixin _$GameState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() idle,
     required TResult Function() start,
     required TResult Function() stop,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idle,
     TResult Function()? start,
     TResult Function()? stop,
     required TResult orElse(),
@@ -51,14 +45,12 @@ mixin _$GameState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle value) idle,
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle value)? idle,
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
     required TResult orElse(),
@@ -79,93 +71,6 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
   final GameState _value;
   // ignore: unused_field
   final $Res Function(GameState) _then;
-}
-
-/// @nodoc
-abstract class $IdleCopyWith<$Res> {
-  factory $IdleCopyWith(Idle value, $Res Function(Idle) then) =
-      _$IdleCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$IdleCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
-    implements $IdleCopyWith<$Res> {
-  _$IdleCopyWithImpl(Idle _value, $Res Function(Idle) _then)
-      : super(_value, (v) => _then(v as Idle));
-
-  @override
-  Idle get _value => super._value as Idle;
-}
-
-/// @nodoc
-
-class _$Idle implements Idle {
-  const _$Idle();
-
-  @override
-  String toString() {
-    return 'GameState.idle()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Idle);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() idle,
-    required TResult Function() start,
-    required TResult Function() stop,
-  }) {
-    return idle();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idle,
-    TResult Function()? start,
-    TResult Function()? stop,
-    required TResult orElse(),
-  }) {
-    if (idle != null) {
-      return idle();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Idle value) idle,
-    required TResult Function(Start value) start,
-    required TResult Function(Stop value) stop,
-  }) {
-    return idle(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle value)? idle,
-    TResult Function(Start value)? start,
-    TResult Function(Stop value)? stop,
-    required TResult orElse(),
-  }) {
-    if (idle != null) {
-      return idle(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Idle implements GameState {
-  const factory Idle() = _$Idle;
 }
 
 /// @nodoc
@@ -205,7 +110,6 @@ class _$Start implements Start {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() idle,
     required TResult Function() start,
     required TResult Function() stop,
   }) {
@@ -215,7 +119,6 @@ class _$Start implements Start {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idle,
     TResult Function()? start,
     TResult Function()? stop,
     required TResult orElse(),
@@ -229,7 +132,6 @@ class _$Start implements Start {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle value) idle,
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
   }) {
@@ -239,7 +141,6 @@ class _$Start implements Start {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle value)? idle,
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
     required TResult orElse(),
@@ -292,7 +193,6 @@ class _$Stop implements Stop {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() idle,
     required TResult Function() start,
     required TResult Function() stop,
   }) {
@@ -302,7 +202,6 @@ class _$Stop implements Stop {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idle,
     TResult Function()? start,
     TResult Function()? stop,
     required TResult orElse(),
@@ -316,7 +215,6 @@ class _$Stop implements Stop {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle value) idle,
     required TResult Function(Start value) start,
     required TResult Function(Stop value) stop,
   }) {
@@ -326,7 +224,6 @@ class _$Stop implements Stop {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle value)? idle,
     TResult Function(Start value)? start,
     TResult Function(Stop value)? stop,
     required TResult orElse(),

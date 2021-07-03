@@ -70,11 +70,11 @@ class _GameLaneState extends State<GameLane>
       provider: gameStateProvider,
       onChange: (context, state) {
         state.maybeWhen(
-          start: () => _controller.forward(),
-          stop: () {
-            _controller.reset();
+          start: () {
             context.read(scoreStateProvider.notifier).reset();
+            _controller.forward();
           },
+          stop: () => _controller.reset(),
           orElse: () => _controller.reset(),
         );
       },
@@ -97,8 +97,12 @@ class _GameLaneState extends State<GameLane>
                         gameState == const GameState.start() ? widget.size : 0,
                     color: _currentBallColor,
                     onTap: () {
-                      context.read(scoreStateProvider.notifier).increment();
-                      randomBallOrBomb();
+                      if (_currentBallColor != bombColor) {
+                        context.read(scoreStateProvider.notifier).increment();
+                        randomBallOrBomb();
+                      } else {
+                        context.read(gameStateProvider.notifier).stop();
+                      }
                     },
                   ),
                 ),
