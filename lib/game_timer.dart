@@ -25,7 +25,7 @@ class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
       setState(() {
         _elapsed = elapsed;
         if (_timeLeft == 0) {
-          context.read(gameStateProvider.notifier).stop();
+          context.read(gameStateProvider.notifier).over();
         }
       });
     });
