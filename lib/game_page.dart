@@ -17,7 +17,7 @@ class GamePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BALL ⚽ or BOMB 💣'),
+        title: const Text('⚽ B•O•B 💣'),
         actions: [
           IconButton(
             icon: const Icon(Icons.play_arrow),
@@ -81,13 +81,36 @@ class GamePage extends StatelessWidget {
                 ScoreBoard(),
               ],
             ),
+            Consumer(builder: (context, ref, child) {
+              final gameState = ref(gameStateProvider);
+              return gameState == const GameState.stop()
+                  ? _showGameStartOverlay(context)
+                  : const SizedBox.shrink();
+            }),
           ],
         ),
       ),
     );
   }
 
-  Future<void> _showGameOverDialog(context) async {
+  Widget _showGameStartOverlay(BuildContext context) {
+    return Container(
+      color: Colors.black.withOpacity(0.5),
+      width: double.infinity,
+      height: double.infinity,
+      child: Center(
+        child: InkWell(
+          child: const Icon(Icons.play_circle_fill,
+              size: 100.0, color: Colors.white),
+          onTap: () {
+            context.read(gameStateProvider.notifier).start();
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showGameOverDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

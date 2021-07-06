@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     }
 
     return MaterialApp(
-      title: 'BALL ⚽ or BOMB 💣',
+      title: '⚽ B•O•B 💣',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.brown,

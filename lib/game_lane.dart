@@ -41,7 +41,6 @@ class _GameLaneState extends State<GameLane>
 
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
-        // Remove setState here the animation becomes janky from the start but works the same
         setState(() {
           _currentBallColor = randomColor();
           _controller.reset();
