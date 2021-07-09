@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
-const Duration gameDuration = Duration(seconds: 10);
-const Color bombColor = Colors.black;
-const List<Color> ballColors = [
-  Colors.pink,
-  Colors.indigo,
-  Colors.cyan,
-  Colors.amber,
-  Colors.lime
-];
-const int bombChancePercentage = 20;
+abstract class GameConfig {
+  static const Duration gameDuration = Duration(seconds: 10);
+  static const Color bombColor = Colors.black;
+  static const List<Color> ballColors = [
+    Colors.pink,
+    Colors.indigo,
+    Colors.cyan,
+    Colors.amber,
+    Colors.lime
+  ];
+  static const int bombChancePercentage = 20;
+}
+
+abstract class SharedPrefKey {
+  static const String highScore = 'highScore';
+}

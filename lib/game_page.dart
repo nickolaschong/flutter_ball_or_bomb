@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ball_or_bomb/game_lane.dart';
-import 'package:flutter_ball_or_bomb/game_state.dart';
 import 'package:flutter_ball_or_bomb/game_timer.dart';
 import 'package:flutter_ball_or_bomb/score_board.dart';
-import 'package:flutter_ball_or_bomb/score_state.dart';
+import 'package:flutter_ball_or_bomb/shared_pref_util.dart';
+import 'package:flutter_ball_or_bomb/state/game_state.dart';
+import 'package:flutter_ball_or_bomb/state/score_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends StatelessWidget {
@@ -37,7 +38,10 @@ class GamePage extends StatelessWidget {
         provider: gameStateProvider,
         onChange: (context, state) {
           state.maybeWhen(
-            over: () => _showGameOverDialog(context),
+            over: () {
+              _saveHighScore(context);
+              return _showGameOverDialog(context);
+            },
             orElse: () => {},
           );
         },
@@ -130,5 +134,14 @@ class GamePage extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _saveHighScore(BuildContext context) async {
+    var currentScore = context.read(scoreStateProvider);
+    var currentHighScore = SharedPrefUtil.getHighScore();
+
+    if (currentScore > currentHighScore) {
+      SharedPrefUtil.saveHighScore(currentScore);
+    }
   }
 }

@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_ball_or_bomb/ball_or_bomb.dart';
 import 'package:flutter_ball_or_bomb/constants.dart';
-import 'package:flutter_ball_or_bomb/game_state.dart';
-import 'package:flutter_ball_or_bomb/score_state.dart';
+import 'package:flutter_ball_or_bomb/state/game_state.dart';
+import 'package:flutter_ball_or_bomb/state/score_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GameLane extends StatefulWidget {
@@ -30,7 +30,8 @@ class _GameLaneState extends State<GameLane>
 
   late Color _currentBallColor;
   final _random = Random();
-  Color randomColor() => ballColors[_random.nextInt(ballColors.length)];
+  Color randomColor() =>
+      GameConfig.ballColors[_random.nextInt(GameConfig.ballColors.length)];
 
   @override
   void initState() {
@@ -110,14 +111,15 @@ class _GameLaneState extends State<GameLane>
 
   void _randomBallOrBomb() {
     setState(() {
-      _currentBallColor = _random.nextInt(99) + 1 > bombChancePercentage
-          ? randomColor()
-          : bombColor;
+      _currentBallColor =
+          _random.nextInt(99) + 1 > GameConfig.bombChancePercentage
+              ? randomColor()
+              : GameConfig.bombColor;
     });
   }
 
   void _onBallOrBombTap() {
-    if (_currentBallColor != bombColor) {
+    if (_currentBallColor != GameConfig.bombColor) {
       context.read(scoreStateProvider.notifier).increment();
       _randomBallOrBomb();
     } else {

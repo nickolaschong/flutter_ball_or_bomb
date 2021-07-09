@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_ball_or_bomb/constants.dart';
-import 'package:flutter_ball_or_bomb/game_state.dart';
+import 'package:flutter_ball_or_bomb/state/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GameTimer extends StatefulWidget {
@@ -17,7 +17,7 @@ class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
   late Animation<Color?> _animation;
 
   Duration _elapsed = Duration.zero;
-  int get _timeLeft => (gameDuration - _elapsed).inSeconds;
+  int get _timeLeft => (GameConfig.gameDuration - _elapsed).inSeconds;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
 
     _controller = AnimationController(
       vsync: this,
-      duration: gameDuration,
+      duration: GameConfig.gameDuration,
     );
 
     _animation =
