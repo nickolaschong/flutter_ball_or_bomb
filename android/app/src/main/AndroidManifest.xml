@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_ball_or_bomb">
    <application
-        android:label="flutter_ball_or_bomb"
+        android:label="B.O.B"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
