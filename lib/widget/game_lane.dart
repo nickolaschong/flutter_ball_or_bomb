@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ball_or_bomb/ball_or_bomb.dart';
 import 'package:flutter_ball_or_bomb/constants.dart';
 import 'package:flutter_ball_or_bomb/state/game_state.dart';
 import 'package:flutter_ball_or_bomb/state/score_state.dart';
+import 'package:flutter_ball_or_bomb/widget/ball_or_bomb.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GameLane extends StatefulWidget {

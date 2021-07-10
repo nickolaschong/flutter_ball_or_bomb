@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ball_or_bomb/shared_pref_util.dart';
 import 'package:flutter_ball_or_bomb/state/score_state.dart';
+import 'package:flutter_ball_or_bomb/util/shared_pref_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ScoreBoard extends StatefulWidget {

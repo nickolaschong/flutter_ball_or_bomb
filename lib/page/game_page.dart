@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ball_or_bomb/game_lane.dart';
-import 'package:flutter_ball_or_bomb/game_timer.dart';
-import 'package:flutter_ball_or_bomb/score_board.dart';
-import 'package:flutter_ball_or_bomb/shared_pref_util.dart';
+import 'package:flutter_ball_or_bomb/constants.dart';
 import 'package:flutter_ball_or_bomb/state/game_state.dart';
 import 'package:flutter_ball_or_bomb/state/score_state.dart';
+import 'package:flutter_ball_or_bomb/util/shared_pref_util.dart';
+import 'package:flutter_ball_or_bomb/widget/game_lane.dart';
+import 'package:flutter_ball_or_bomb/widget/game_timer.dart';
+import 'package:flutter_ball_or_bomb/widget/score_board.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GamePage extends StatelessWidget {
@@ -19,20 +20,21 @@ class GamePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('⚽ B•O•B 💣'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.play_arrow),
-            onPressed: () {
-              context.read(gameStateProvider.notifier).start();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.stop),
-            onPressed: () {
-              context.read(gameStateProvider.notifier).stop();
-            },
-          ),
-        ],
+        actions: GameConfig.isDebugMode
+            ? [
+                IconButton(
+                    icon: const Icon(Icons.play_arrow),
+                    onPressed: () {
+                      context.read(gameStateProvider.notifier).start();
+                    }),
+                IconButton(
+                  icon: const Icon(Icons.stop),
+                  onPressed: () {
+                    context.read(gameStateProvider.notifier).stop();
+                  },
+                ),
+              ]
+            : [],
       ),
       body: ProviderListener<GameState>(
         provider: gameStateProvider,

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ball_or_bomb/game_page.dart';
-import 'package:flutter_ball_or_bomb/shared_pref_util.dart';
+import 'package:flutter_ball_or_bomb/page/game_page.dart';
+import 'package:flutter_ball_or_bomb/util/shared_pref_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wakelock/wakelock.dart';
 
