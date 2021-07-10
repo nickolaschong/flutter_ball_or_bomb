@@ -9,13 +9,10 @@ Within x seconds<br>
 
 
 ### Logo
-<img src="/assets/images/logo.jpg" alt="logo" width="100"/>
+<img src="/assets/design/logo.jpg" alt="logo" width="100"/>
 
 ### UI Sketching
-TODO:
+<img src="/assets/design/sketch/sketch.jpg" alt="sketch" width="500"/>
 
-### Low-fidelity digital wireframes
-TODO:
-
-### High-fidelity digital wireframes
+### Game Screenshots
 TODO:
