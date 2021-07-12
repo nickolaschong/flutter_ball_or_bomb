@@ -37,7 +37,7 @@ class _GameLaneState extends State<GameLane>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: GameConfig.dropSpeed,
     );
 
     _controller.addStatusListener((AnimationStatus status) {
