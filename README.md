@@ -15,4 +15,4 @@ Within x seconds<br>
 <img src="/assets/design/sketch/sketch.jpg" alt="sketch" width="500"/>
 
 ### Game Screenshots
-TODO:
+<img src="/assets/design/screen/screen.png" alt="screen" width="500"/>
