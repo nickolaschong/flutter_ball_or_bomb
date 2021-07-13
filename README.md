@@ -3,7 +3,7 @@
 A simple Flutter animation game project.
 
 ## Rules of Game
-Within x seconds<br>
+Within x seconds, click on the dropping balls / bomb<br>
 **Click on Ball**: Add Points<br>
 **Click on Bomb**: Game over!<br>
 
