@@ -35,6 +35,8 @@ class _GameLaneState extends State<GameLane>
 
   @override
   void initState() {
+    _randomBallOrBomb();
+
     _controller = AnimationController(
       vsync: this,
       duration: GameConfig.dropSpeed,
@@ -42,8 +44,8 @@ class _GameLaneState extends State<GameLane>
 
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
+        _randomBallOrBomb();
         setState(() {
-          _currentBallColor = randomColor();
           _controller.reset();
           _controller.forward();
         });
@@ -52,8 +54,6 @@ class _GameLaneState extends State<GameLane>
 
     _animation =
         Tween<double>(begin: 0, end: widget.upperBound).animate(_controller);
-
-    _currentBallColor = randomColor();
 
     super.initState();
   }
@@ -72,6 +72,7 @@ class _GameLaneState extends State<GameLane>
         state.maybeWhen(
           start: () {
             context.read(scoreStateProvider.notifier).reset();
+            _randomBallOrBomb();
             _controller.forward();
           },
           stop: () => _controller.reset(),

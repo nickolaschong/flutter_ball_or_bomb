@@ -12,7 +12,7 @@ abstract class GameConfig {
     Colors.amber,
     Colors.lime
   ];
-  static const int bombChancePercentage = 20;
+  static const int bombChancePercentage = 15;
 }
 
 abstract class SharedPrefKey {
