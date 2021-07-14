@@ -4,14 +4,15 @@ import 'package:flutter_ball_or_bomb/constants.dart';
 import 'package:flutter_ball_or_bomb/state/game_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GameTimer extends StatefulWidget {
+class GameTimer extends ConsumerStatefulWidget {
   const GameTimer({Key? key}) : super(key: key);
 
   @override
   _GameTimerState createState() => _GameTimerState();
 }
 
-class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
+class _GameTimerState extends ConsumerState<GameTimer>
+    with TickerProviderStateMixin {
   late final Ticker _ticker;
   late AnimationController _controller;
   late Animation<Color?> _animation;
@@ -25,7 +26,7 @@ class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
       setState(() {
         _elapsed = elapsed;
         if (_timeLeft == 0) {
-          context.read(gameStateProvider.notifier).over();
+          ref.read(gameStateProvider.notifier).over();
         }
       });
     });
@@ -54,35 +55,33 @@ class _GameTimerState extends State<GameTimer> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener<GameState>(
-      provider: gameStateProvider,
-      onChange: (context, state) {
-        state.maybeWhen(
-          start: () {
-            _ticker.start();
-            _controller.reset();
-            _controller.forward();
-          },
-          stop: () {
-            _ticker.stop();
-            _controller.stop();
-          },
-          orElse: () {
-            _ticker.stop();
-            _controller.stop();
-          },
-        );
-      },
-      child: Container(
-        color: _animation.value,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              'Time left: $_timeLeft',
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+    ref.listen(gameStateProvider, (GameState state) {
+      state.maybeWhen(
+        start: () {
+          _ticker.start();
+          _controller.reset();
+          _controller.forward();
+        },
+        stop: () {
+          _ticker.stop();
+          _controller.stop();
+        },
+        orElse: () {
+          _ticker.stop();
+          _controller.stop();
+        },
+      );
+    });
+
+    return Container(
+      color: _animation.value,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Text(
+            'Time left: $_timeLeft',
+            style: const TextStyle(
+              color: Colors.white,
             ),
           ),
         ),

@@ -7,7 +7,7 @@ import 'package:flutter_ball_or_bomb/state/score_state.dart';
 import 'package:flutter_ball_or_bomb/widget/ball_or_bomb.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GameLane extends StatefulWidget {
+class GameLane extends ConsumerStatefulWidget {
   const GameLane({
     Key? key,
     required this.color,
@@ -23,7 +23,7 @@ class GameLane extends StatefulWidget {
   _GameLaneState createState() => _GameLaneState();
 }
 
-class _GameLaneState extends State<GameLane>
+class _GameLaneState extends ConsumerState<GameLane>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -66,47 +66,39 @@ class _GameLaneState extends State<GameLane>
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener<GameState>(
-      provider: gameStateProvider,
-      onChange: (context, state) {
-        state.maybeWhen(
-          start: () {
-            context.read(scoreStateProvider.notifier).reset();
-            _randomBallOrBomb();
-            _controller.forward();
-          },
-          stop: () => _controller.reset(),
-          orElse: () => _controller.reset(),
-        );
-      },
-      child: Consumer(
-        builder: (context, ref, child) {
-          final gameState = ref(gameStateProvider);
-          return Stack(
-            children: [
-              child!,
-              TopPositionTransition(
-                child: Listener(
-                  onPointerDown: (e) {
-                    setState(() {
-                      _controller.reset();
-                      _controller.forward();
-                    });
-                  },
-                  child: BallOrBomb(
-                    size:
-                        gameState == const GameState.start() ? widget.size : 0,
-                    color: _currentBallColor,
-                    onTap: _onBallOrBombTap,
-                  ),
-                ),
-                animation: _animation,
-              )
-            ],
-          );
+    ref.listen(gameStateProvider, (GameState state) {
+      state.maybeWhen(
+        start: () {
+          ref.read(scoreStateProvider.notifier).reset();
+          _randomBallOrBomb();
+          _controller.forward();
         },
-        child: Container(color: widget.color),
-      ),
+        stop: () => _controller.reset(),
+        orElse: () => _controller.reset(),
+      );
+    });
+
+    final gameState = ref.watch(gameStateProvider);
+    return Stack(
+      children: [
+        Container(color: widget.color),
+        TopPositionTransition(
+          child: Listener(
+            onPointerDown: (e) {
+              setState(() {
+                _controller.reset();
+                _controller.forward();
+              });
+            },
+            child: BallOrBomb(
+              size: gameState == const GameState.start() ? widget.size : 0,
+              color: _currentBallColor,
+              onTap: _onBallOrBombTap,
+            ),
+          ),
+          animation: _animation,
+        )
+      ],
     );
   }
 
@@ -121,10 +113,10 @@ class _GameLaneState extends State<GameLane>
 
   void _onBallOrBombTap() {
     if (_currentBallColor != GameConfig.bombColor) {
-      context.read(scoreStateProvider.notifier).increment();
+      ref.read(scoreStateProvider.notifier).increment();
       _randomBallOrBomb();
     } else {
-      context.read(gameStateProvider.notifier).over();
+      ref.read(gameStateProvider.notifier).over();
     }
   }
 }

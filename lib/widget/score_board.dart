@@ -5,14 +5,14 @@ import 'package:flutter_ball_or_bomb/state/score_state.dart';
 import 'package:flutter_ball_or_bomb/util/shared_pref_util.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScoreBoard extends StatefulWidget {
+class ScoreBoard extends ConsumerStatefulWidget {
   const ScoreBoard({Key? key}) : super(key: key);
 
   @override
   _ScoreBoardState createState() => _ScoreBoardState();
 }
 
-class _ScoreBoardState extends State<ScoreBoard> {
+class _ScoreBoardState extends ConsumerState<ScoreBoard> {
   bool _isAnimateScoreText = false;
   late final TextStyle defaultTextStyle, scaleTextStyle;
 
@@ -29,26 +29,20 @@ class _ScoreBoardState extends State<ScoreBoard> {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderListener<int>(
-      provider: scoreStateProvider,
-      onChange: (context, state) {
-        setState(() {
-          _isAnimateScoreText = state != 0 ? true : false;
-        });
-      },
-      child: Consumer(
-        builder: (context, ref, child) {
-          final scoreState = ref(scoreStateProvider);
-          final highScore = SharedPrefUtil.getHighScore();
+    ref.listen(scoreStateProvider, (int state) {
+      setState(() {
+        _isAnimateScoreText = state != 0 ? true : false;
+      });
+    });
 
-          return Column(
-            children: [
-              _buildCurrentScore(scoreState),
-              _buildHighScore(scoreState, highScore),
-            ],
-          );
-        },
-      ),
+    final scoreState = ref.watch(scoreStateProvider);
+    final highScore = SharedPrefUtil.getHighScore();
+
+    return Column(
+      children: [
+        _buildCurrentScore(scoreState),
+        _buildHighScore(scoreState, highScore),
+      ],
     );
   }
 
