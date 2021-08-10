@@ -37,10 +37,7 @@ class _GameTimerState extends ConsumerState<GameTimer>
     );
 
     _animation =
-        ColorTween(begin: Colors.green, end: Colors.red).animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
+        ColorTween(begin: Colors.green, end: Colors.red).animate(_controller);
 
     super.initState();
   }
